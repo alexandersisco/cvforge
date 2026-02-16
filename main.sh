@@ -13,27 +13,27 @@ fi
 # ----------------------------
 usage() {
     cat <<'EOF'
-    cvforge — Prepare and navigate your CV/resumes, and cover letters.
+cvforge — Prepare tailored resumes and cover letters for job applications.
 
-    USAGE
-    cvforge <command>
+USAGE
+cvforge <command>
 
-    COMMANDS
-        start 
-            Create a new job directory
+COMMANDS
+    start
+        Create a new job directory
 
-        resume
-            Select a resume and generate a PDF
+    resume
+        Select a resume and generate a PDF
 
-        coverletter
-            Select a cover letter and generate a PDF
+    coverletter
+        Select a cover letter and generate a PDF
 
-        open
-            Select a job directory and open it in the file explorer
+    open
+        Select a job directory and open it in the file explorer
 
-        path
-            Select a job directory and print its path
-    EOF
+    path
+        Select a job directory and print its path
+EOF
 }
 
 if [[ "$#" == 0 ]]; then

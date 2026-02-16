@@ -12,7 +12,7 @@ fi
 # Usage
 # ----------------------------
 usage() {
-    cat <<EOF
+    cat <<'EOF'
     cvforge — Prepare and navigate your CV/resumes, and cover letters.
 
     A CV (Curriculum Vitae), Latin for "course of life," is a comprehensive,
@@ -26,7 +26,8 @@ usage() {
     cvforge resume - choose a resume and produce a PDF
     cvforge coverletter - choose a cover letter and produce a PDF
     cvforge open - choose a file from your job directory and open it in the file
-    explorer
+        explorer
+    cvforge path - print the path of the job directory
 EOF
 }
 
@@ -42,5 +43,14 @@ case "$1" in
         "${project_path}/mkresume.sh" ;;
     coverletter)
         "${project_path}/mkcoverletter.sh" ;;
-    *) echo "not a command"; exit 1 ;;
+    path)
+        "${project_path}/jobdir.sh" ;;
+    open)
+        job_dir=$("${project_path}/jobdir.sh")
+        if [ ! -d "$job_dir" ]; then
+            echo "nothing selected"; exit 1
+        fi
+        xdg-open "$job_dir"
+        ;;
+    *) echo "error: not a command"; exit 1 ;;
 esac

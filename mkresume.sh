@@ -123,17 +123,27 @@ ask_pdf_title() {
 }
 
 get_resume_files() {
-    find "$jobs_path" -path "**/resume.md" -type f
+    find "$jobs_path" -path "**/resume.md" -type f | sed "s|${jobs_path}/||"
 }
 
 make_resume() {
 
   cd "$jobs_path"
 
-  local md_file=$(get_resume_files | fzf --preview 'cat {} 2>/dev/null | sed -n "1,200p"')
+  local md_file=$(get_resume_files | fzf --preview "cat {} 2>/dev/null | sed -n '1,200p'")
+  if [[ -z "$md_file" ]]; then
+    echo "no file selected. quit."
+    exit 1
+  fi
 
-  local out="${md_file%.*}.pdf"
-  local job_dir="$(dirname $md_file)"
+  if [[ ! -s "$md_file" ]]; then
+    echo "error: file is empty."
+    exit 2
+  fi
+
+  local job_dir="$jobs_path/$(dirname $md_file)"
+
+  local out="$job_dir/${md_file%.*}.pdf"
 
   if [ ! "$title" = "" ]; then
     title="$applicant - $title"

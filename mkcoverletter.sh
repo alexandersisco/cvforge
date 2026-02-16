@@ -121,12 +121,25 @@ ask_pdf_title() {
   fi
 }
 
-main() {
+get_files() {
+  find "$jobs_path" -path "**/cover_letter.md" -type f | sed "s|${jobs_path}/||"
+}
 
+main() {
   cd "$jobs_path"
 
-  local md_file=$(fzf)
-  local job_dir="$jobs_path/$(dirname $md_file)"
+  local md_file=$(get_files | fzf --preview "cat {} 2>/dev/null | sed -n '1,200p'")
+  if [[ -z "$md_file" ]]; then
+    echo "no file selected. quit."
+    exit 1
+  fi
+
+  if [[ ! -s "$md_file" ]]; then
+    echo "error: file is empty."
+    exit 2
+  fi
+
+  local job_dir="$jobs_path/$(dirname "$md_file")"
 
   local out="$job_dir/${md_file%.*}.pdf"
 

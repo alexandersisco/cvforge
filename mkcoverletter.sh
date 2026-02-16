@@ -24,66 +24,6 @@ OUTPUT_FILENAME=''
 # Load helpers
 . "$project_path/helpers.sh"
 
-# ----------------------------
-# Usage
-# ----------------------------
-usage() {
-  cat <<'EOF'
-mkcoverletter — Render a Markdown resume to PDF with standardized metadata and styling.
-
-USAGE
-  mkcoverletter [title]
-
-ARGUMENTS
-  [title]
-      Title of the letter.
-      This value is used to generate just the PDF document title
-
-      Example:
-        Input title:  Senior Software Engineer
-        PDF title:    Application for Senior Software Engineer
-
-OUTPUT
-  Generates a PDF in the same directory as the source Markdown file.
-
-OPTIONS
-  -h, --help    Display this help message
-
-EOF
-}
-
-# The 'getopt' command is used with command substitution $(...) to reformat arguments.
-parsed_args=$(getopt -n $0 -o h --long help -- "$@")
-valid_args=$?
-if [ "$valid_args" != "0" ]; then
-  exit 1
-fi
-
-# The reformatted arguments are assigned back to the positional parameters
-eval set -- "$parsed_args"
-
-while :
-do
-  case "$1" in
-    -h | --help)
-      usage
-      shift
-      ;;
-    --) shift; break ;; # End of all options
-    *) echo "Internal error!" ; exit 1 ;;
-  esac
-done
-
-
-if [ "$#" -gt 0 ]; then
-  title="$1"; shift
-fi
-
-if [ "$#" -gt 0 ]; then
-  echo "unexpected extra arguments: $*"
-  exit 1
-fi
-
 ask_pdf_filename() {
   OUTPUT_FILENAME=''
 

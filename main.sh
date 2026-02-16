@@ -15,20 +15,25 @@ usage() {
     cat <<'EOF'
     cvforge — Prepare and navigate your CV/resumes, and cover letters.
 
-    A CV (Curriculum Vitae), Latin for "course of life," is a comprehensive,
-    detailed document outlining a person's entire educational and professional
-    history. Unlike a short resume, a CV often spans multiple pages and is
-    typically used for academic, research, or scientific job applications to
-    highlight publications, awards, and credentials. 
-
     USAGE
-    cvforge start - create a new job directory
-    cvforge resume - choose a resume and produce a PDF
-    cvforge coverletter - choose a cover letter and produce a PDF
-    cvforge open - choose a file from your job directory and open it in the file
-        explorer
-    cvforge path - print the path of the job directory
-EOF
+    cvforge <command>
+
+    COMMANDS
+        start 
+            Create a new job directory
+
+        resume
+            Select a resume and generate a PDF
+
+        coverletter
+            Select a cover letter and generate a PDF
+
+        open
+            Select a job directory and open it in the file explorer
+
+        path
+            Select a job directory and print its path
+    EOF
 }
 
 if [[ "$#" == 0 ]]; then

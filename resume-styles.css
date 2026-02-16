@@ -1,0 +1,110 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif !important;
+}
+
+.contact-info > * {
+  display: block;
+  /* font-size: 10pt; */
+  /* line-height: 16pt; */
+  font-size: 11pt;
+  line-height: 16pt;
+}
+
+p {
+  margin: 16pt 0;
+}
+
+p, li {
+  font-size: 11pt;
+  line-height: 16pt;
+}
+
+ul, ol {
+  margin: 16pt 0;
+}
+
+h1 {
+  margin-top: 4pt;
+  margin-bottom: 16pt;
+
+  /* margin-bottom: 0; */
+  font-size: 24pt;
+  line-height: 28pt;
+}
+
+h2 {
+  margin-top: 31pt;
+  font-size: 18pt;
+  line-height: 22pt;
+}
+
+h3 {
+  margin-top: 23pt;
+  font-size: 14pt;
+  line-height: 18pt;
+}
+
+h2, h3, p, h2 + ul, h2 + ol {
+  margin-top: 16pt;
+  margin-bottom: 16pt;
+}
+
+ul, ol {
+  margin-top: -16pt;
+  margin-bottom: 16pt;
+}
+
+@page {
+  margin: .7in .7in;
+  /* font-family: "Times New Roman", "Calibri", "Helvetica Neue", Arial, sans-serif !important; */
+}
+
+@media print {
+
+  h1 {
+    page-break-before: always;
+
+    break-before: always;
+  }
+
+  /* Avoid page breaks around headers */
+  h2, h3, h4, h5, h6 {
+    page-break-inside: avoid;
+    page-break-before: avoid;
+    page-break-after: avoid;
+
+    break-inside: avoid;
+    break-before: avoid;
+    break-after: avoid;
+  }
+
+  /* Optional: keep header + first paragraph together */
+  h2 + p, h3 + p {
+    break-before: avoid-page;
+  }
+
+  /* Avoid breaking inside elements */
+  table, img, pre, blockquote, .no-break {
+    break-inside: avoid;
+  }
+
+  li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+  }
+
+  ul, ol {
+    break-before: avoid-page;
+    page-break-before: avoid;
+  }
+
+  h2 + ul,
+  h2 + ol {
+    break-before: avoid;
+    page-break-before: avoid;
+  }
+}

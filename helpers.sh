@@ -2,7 +2,7 @@
 
 dirslug() {
     str="$1"
-    str="$(echo "${str,,}" | sed -E 's/[ -\/]+/_/g')"
+    str="$(echo "$str" | lower | sed -E 's/[ -\/]+/_/g')"
     echo $str
 }
 
@@ -13,7 +13,14 @@ fileslug() {
 }
 
 lower() {
-    echo "${1,,}"
+    local input result
+    if [[ -t 0 ]]; then
+        input="$1"
+    else
+        read input
+    fi
+
+    echo "$input" | tr '[:upper:]' '[:lower:]'
 }
 
 confirm() {

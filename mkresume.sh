@@ -6,8 +6,9 @@ project_path=$(dirname $(realpath $0))
 # Contact info from ./.contact-info.env
 set -euo pipefail
 
+CONFIG_BASE="$HOME/.config/cvforge"
 # load config
-. "$HOME/.config/cvforge/app.conf"
+. "$CONFIG_BASE/app.conf"
 
 # validate
 : "${APPLICANT_NAME:?missing APPLICANT_NAME}"
@@ -170,7 +171,21 @@ make_resume() {
     out="$job_dir/$OUTPUT_FILENAME"
   fi
 
-  tmp_dir="/tmp/mkresume"
+  local css_file="$project_path/resume-styles.css"
+  # If resume-styles.css exists in ~/.config/cvforge/ then override the default
+  if [[ -f "$CONFIG_BASE/resume-styles.css" ]]; then
+    css_file="$CONFIG_BASE/resume-styles.css"
+    echo "Loaded CSS styles from $CONFIG_BASE" >&2
+  fi
+
+  local js_file="$project_path/resume-script.js"
+  # If resume-script.js exists in ~/.config/cvforge/ then override the default
+  if [[ -f "$CONFIG_BASE/resume-script.js" ]]; then
+    js_file="$CONFIG_BASE/resume-script.js"
+    echo "Loaded JS from $CONFIG_BASE" >&2
+  fi
+
+  tmp_dir="/tmp/cvforge"
   mkdir -p $tmp_dir
 
   # Inject contact info into the ./resume-script.js
@@ -178,10 +193,10 @@ make_resume() {
     -e "s|<LOCATION>|$LOCATION|g" \
     -e "s|<EMAIL>|$EMAIL|g" \
     -e "s|<PHONE>|$PHONE|g" \
-    "$project_path/resume-script.js" \
+    "$js_file" \
   > "$tmp_dir/resume-script.js"
 
-  mkpdf $md_file --title "$title" --output "$out" --css "$project_path/resume-styles.css" --js "$tmp_dir/resume-script.js"
+  mkpdf $md_file --title "$title" --output "$out" --css "$css_file" --js "$tmp_dir/resume-script.js"
 
   if [ "$?" -eq 7 ]; then
     echo "Cannot connect to mkpdf-server. Did you forget to start the server?"

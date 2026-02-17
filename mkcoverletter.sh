@@ -6,8 +6,9 @@ project_path=$(dirname $(realpath $0))
 # Contact info from ./.contact-info.env
 set -euo pipefail
 
+CONFIG_BASE="$HOME/.config/cvforge"
 # load config
-. "$HOME/.config/cvforge/app.conf"
+. "$CONFIG_BASE/app.conf"
 
 # validate
 : "${APPLICANT_NAME:?missing APPLICANT_NAME}"
@@ -165,7 +166,14 @@ main() {
     title="$OUTPUT_TITLE"
   fi
 
-  mkpdf $md_file --title "$title" --output "$out" --css "$project_path/resume-styles.css"
+  local css_file="$project_path/resume-styles.css"
+  # If resume-styles.css exists in ~/.config/cvforge/ then override the default
+  if [[ -f "$CONFIG_BASE/resume-styles.css" ]]; then
+    css_file="$CONFIG_BASE/resume-styles.css"
+    echo "Loaded CSS styles from $CONFIG_BASE" >&2
+  fi
+
+  mkpdf $md_file --title "$title" --output "$out" --css "$css_file"
 
   if [ "$?" -eq 7 ]; then
     echo "Cannot connect to mkpdf-server. Did you forget to start the server?"

@@ -3,9 +3,33 @@
 # base dir for this script
 project_path=$(dirname $(realpath $0))
 
-if [[ ! -f "$HOME/.config/cvforge/app.conf" ]]; then
-    echo "error: missing configuration file"
-    exit 1
+CONFIG_BASE="$HOME/.config/cvforge"
+
+blank_config() {
+    cat <<'EOF'
+APPLICATION="JOHN DOE"
+LOCATION="Dallas, TX"
+EMAIL="john.doe@example.com"
+PHONE="1234567890"
+JOBS_DIR="$HOME/Documents/jobs"
+EOF
+}
+
+if [[ ! -d "$CONFIG_BASE" ]]; then
+    echo "Missing config files for cvforge."
+    echo "Setting up config files..."
+
+    mkdir -p "$CONFIG_BASE"
+
+    if [[ -d "$CONFIG_BASE" ]]; then
+        blank_config > "$CONFIG_BASE/app.conf"
+
+        cp "$project_path/resume-script.js"
+        cp "$project_path/resume-styles.css"
+
+        echo "Config directory created successfully."
+        echo "Update your config at $CONFIG_BASE"
+    fi
 fi
 
 # ----------------------------
@@ -33,6 +57,9 @@ COMMANDS
 
     path
         Select a job directory and print its path
+
+CONFIGURATION
+    You can edit your config by navigation to ~/.config/cvforge/app.conf
 EOF
 }
 

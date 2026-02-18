@@ -29,6 +29,7 @@ if [[ ! -d "$CONFIG_BASE" ]]; then
 
         echo "Config directory created successfully."
         echo "Update your config at $CONFIG_BASE"
+        echo
     fi
 fi
 

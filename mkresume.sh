@@ -204,7 +204,7 @@ make_resume() {
   fi
 
   local output_dir="$(dirname $md_file)"
-  xdg-open $output_dir
+  open_file $output_dir
 }
 
 # Start to build resume

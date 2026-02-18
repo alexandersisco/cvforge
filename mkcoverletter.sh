@@ -181,7 +181,7 @@ main() {
   fi
 
   local output_dir="$jobs_path/$(dirname $md_file)"
-  xdg-open $output_dir
+  open_file $output_dir
 
   cd -
 }

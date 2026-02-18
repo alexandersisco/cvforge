@@ -5,6 +5,9 @@ project_path=$(dirname $(realpath $0))
 
 CONFIG_BASE="$HOME/.config/cvforge"
 
+# Load Helpers
+. "$project_path/helpers.sh"
+
 blank_config() {
     cat <<'EOF'
 APPLICATION="JOHN DOE"
@@ -83,7 +86,7 @@ case "$1" in
         if [ ! -d "$job_dir" ]; then
             echo "nothing selected"; exit 1
         fi
-        xdg-open "$job_dir"
+        open_file "$job_dir"
         ;;
     *) echo "error: not a command"; exit 1 ;;
 esac

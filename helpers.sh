@@ -80,3 +80,10 @@ set_kv_item() {
         echo "$key=\"$val\"" >> "$kv_file"
     fi
 }
+
+open_file() {
+    case "$OSTYPE" in
+        darwin*) open "$1" ;;
+        linux*) xdg-open "$1" ;;
+    esac
+}

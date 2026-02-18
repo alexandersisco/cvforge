@@ -24,8 +24,8 @@ if [[ ! -d "$CONFIG_BASE" ]]; then
     if [[ -d "$CONFIG_BASE" ]]; then
         blank_config > "$CONFIG_BASE/app.conf"
 
-        cp "$project_path/resume-script.js"
-        cp "$project_path/resume-styles.css"
+        cp "$project_path/resume-script.js" "$CONFIG_BASE/resume-script.js"
+        cp "$project_path/resume-styles.css" "$CONFIG_BASE/resume-styles.css"
 
         echo "Config directory created successfully."
         echo "Update your config at $CONFIG_BASE"
